@@ -1,5 +1,7 @@
 package com.trybe.droneFeeder.service;
 
+import com.trybe.droneFeeder.dto.DroneDto;
+import com.trybe.droneFeeder.dto.UpdateDroneDto;
 import com.trybe.droneFeeder.model.Drone;
 import com.trybe.droneFeeder.repository.DroneRepository;
 
@@ -24,7 +26,19 @@ public class DroneService {
   }
   
   @Transactional
-  public void create(Drone drone) {
+  public void create(DroneDto droneDto) {
+    var drone = new Drone();
+    drone.setId(droneDto.getId());
+    drone.setName(droneDto.getName());
+
+    repository.persist(drone);
+  }
+
+  @Transactional
+  public void update(UpdateDroneDto droneDto, Long id) {
+    var drone = repository.findById(id);
+    drone.setName(droneDto.getName());
+    
     repository.persist(drone);
   }
   
